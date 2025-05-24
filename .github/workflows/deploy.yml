@@ -31,7 +31,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/si-2025-lab3:${{ github.ref_name }}-latest .
+          TAG=${GITHUB_REF#refs/heads/}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/si-2025-lab3:${TAG}-latest .
 
   docker-push:
     name: Push Docker Image
@@ -46,7 +47,8 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/si-2025-lab3:${{ github.ref_name }}-latest
+          TAG=${GITHUB_REF#refs/heads/}
+          docker push ${{ secrets.DOCKER_USERNAME }}/si-2025-lab3:${TAG}-latest
 
   deploy:
     name: Deploy to GitHub Pages
